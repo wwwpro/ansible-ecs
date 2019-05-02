@@ -1,4 +1,20 @@
-- name: create symlinks
-  src: "{{ itm.src }}"
-  dest: "{{ itm.dest }}"
+- name: make sure dest directories exist
+  path: "{{ item.dest }}"
+  state: directory
   loop: "{{ symlinks }}"
+  ignore_errors: yes
+  when:
+   - symlinks is defined
+  tags:
+    - always
+
+- name: create symlinks
+  src: "{{ item.src }}"
+  dest: "{{ item.dest }}"
+  state: link
+  loop: "{{ symlinks }}"
+  ignore_errors: yes
+  when:
+   - symlinks is defined
+  tags:
+    - always
