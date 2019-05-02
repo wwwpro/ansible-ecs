@@ -1,0 +1,4 @@
+- name: create symlinks
+  src: "{{ itm.src }}"
+  dest: "{{ itm.dest }}"
+  loop: "{{ symlinks }}"
